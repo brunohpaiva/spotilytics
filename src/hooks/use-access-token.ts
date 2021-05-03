@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 
 export const useAccessToken = () => {
   const [accessToken, setAccessToken] = useState<string | undefined>(undefined)
+  const [error, setError] = useState<string | undefined>(undefined)
 
   useEffect(() => {
     if (!process.browser)
@@ -18,11 +19,13 @@ export const useAccessToken = () => {
     const stateCookie = cookie.parse(document.cookie)["auth-state"]
 
     if (!accessToken || !state || state != stateCookie) {
+      setAccessToken(undefined)
+      setError("Invalid access token or state code.")
       return
     }
 
     setAccessToken(accessToken)
   }, [process.browser && window?.location?.hash])
 
-  return accessToken
+  return [accessToken, error] as const
 }
