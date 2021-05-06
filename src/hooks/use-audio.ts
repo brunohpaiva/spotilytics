@@ -14,23 +14,26 @@ export const useAudio = (url: string) => {
   const loadAudio = () => {
     const audio = new Audio(url)
     setState(PlaybackState.LOADING)
-    audio.oncanplaythrough = startPlaying
-    audio.onended = () => setState(PlaybackState.NOT_PLAYING)
     setAudio(audio)
+
+    audio.oncanplaythrough = () => {
+      startPlaying(audio)
+    }
+    audio.onended = () => setState(PlaybackState.NOT_PLAYING)
   }
 
-  const startPlaying = () => {
+  const startPlaying = (audio?: HTMLAudioElement) => {
     setState(PlaybackState.PLAYING)
     audio?.play()
   }
 
   const play = useCallback(() => {
     if (state != PlaybackState.UNLOADED) {
-      startPlaying()
+      startPlaying(audio)
     } else {
       loadAudio()
     }
-  }, [state])
+  }, [state, audio])
 
   const pause = useCallback(() => {
     if (state != PlaybackState.UNLOADED) {
@@ -42,14 +45,14 @@ export const useAudio = (url: string) => {
   const toggle = useCallback(() => {
     if (state != PlaybackState.UNLOADED) {
       if (state === PlaybackState.NOT_PLAYING) {
-        startPlaying()
+        startPlaying(audio)
       } else {
         pause()
       }
     } else {
       loadAudio()
     }
-  }, [state])
+  }, [state, audio])
 
   const controls = {
     play,
