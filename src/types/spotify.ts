@@ -49,10 +49,18 @@ export type Track = {
   uri: string;
 }
 
-export type UserTopTracksResponse = {
-  items: Track[];
+export type Paging<T> = {
+  href: string;
+  items: T[];
+  limit: number;
+  next: string;
+  offset: number;
+  previous: string;
+  total: number;
 }
 
-export type UserTopArtistsResponse = {
-  items: Artist[];
-}
+export type UserTopTracksResponse = Paging<Track>
+
+export type UserTopArtistsResponse = Paging<Artist>
+
+export type UserTopResponse = Paging<Track | Artist>

@@ -29,14 +29,15 @@ const IndexPage = () => {
   };
 
   const fetchData = async () => {
-    const json = await fetchUserTop(accessToken!!, "tracks") as UserTopTracksResponse
+    const json = await fetchUserTop(accessToken!!, "tracks", "long") as UserTopTracksResponse
     setData(json.items)
   }
 
   return (
     <div>
       {!accessToken && <button onClick={authenticate}>authenticate</button>}
-      {data && <div>
+      {data &&
+      <div style={{ display: 'grid', gridGap: 16, gridTemplateColumns: "repeat(auto-fill,minmax(350px,1fr))" }}>
         {data.map((track, index) => (
           <SpotifyTrack track={track} key={index}/>
         ))}

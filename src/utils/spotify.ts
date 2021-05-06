@@ -1,4 +1,4 @@
-import { UserTopArtistsResponse, UserTopTracksResponse } from "../types/spotify"
+import { Album, UserTopResponse } from "../types/spotify"
 
 const ACCOUNTS_PATH = "https://accounts.spotify.com/"
 const API_PATH = "https://api.spotify.com/v1/"
@@ -23,7 +23,20 @@ const fetchWithAuth = (accessToken: string, path: string, config?: RequestInit) 
   })
 }
 
-export const fetchUserTop = async (accessToken: string, type: 'tracks' | 'artists') => {
-  const response = await fetchWithAuth(accessToken, `me/top/${type}`)
-  return await response.json() as UserTopTracksResponse | UserTopArtistsResponse
+export const fetchUserTop = async (
+  accessToken: string,
+  type: 'tracks' | 'artists',
+  timeRange: 'long' | 'medium' | 'short' = 'medium',
+  limit = 20,
+  offset = 0,
+) => {
+  const response = await fetchWithAuth(accessToken, `me/top/${type}?time_range=${timeRange}_term&limit=${limit}&offset=${offset}`)
+  return await response.json() as UserTopResponse
 }
+
+export const getAlbumImage = (album: Album) => {
+  return album.images.sort((imageLeft, imageRight) => {
+    return imageRight.width - imageLeft.width;
+  })[0];
+}
+
