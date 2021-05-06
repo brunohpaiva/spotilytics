@@ -2,6 +2,7 @@ import { useCallback, useState } from "react"
 
 export enum PlaybackState {
   UNLOADED,
+  LOADING,
   PLAYING,
   NOT_PLAYING,
 }
@@ -12,7 +13,8 @@ export const useAudio = (url: string) => {
 
   const loadAudio = () => {
     const audio = new Audio(url)
-    audio.oncanplay = startPlaying
+    setState(PlaybackState.LOADING)
+    audio.oncanplaythrough = startPlaying
     audio.onended = () => setState(PlaybackState.NOT_PLAYING)
     setAudio(audio)
   }

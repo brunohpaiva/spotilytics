@@ -18,6 +18,8 @@ const SpotifyTrack = ({ track }: Props) => {
       case PlaybackState.UNLOADED:
       case PlaybackState.NOT_PLAYING:
         return "Preview"
+      case PlaybackState.LOADING:
+        return "Loading..."
       case PlaybackState.PLAYING:
         return "Stop"
     }
