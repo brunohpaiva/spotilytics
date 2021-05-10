@@ -3,7 +3,6 @@
   border-radius: 4px;
   display: flex;
   padding: 16px;
-  box-shadow: 0 8px 24px rgba(0,0,0,.5);
   color: white;
 }
 
@@ -16,6 +15,7 @@
   height: 148px;
   margin-right: 16px;
   position: relative;
+  box-shadow: 0 8px 24px rgba(0,0,0,.5);
 }
 
 .albumImage > img {
@@ -27,4 +27,20 @@
   position: absolute;
   right: 8px;
   bottom: 8px;
+  transition: opacity .3s ease, transform .3s ease;
+  transform: translateY(8px);
+  opacity: 0;
+}
+
+.root:hover > .albumImage > button {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.root a {
+  text-decoration: none;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

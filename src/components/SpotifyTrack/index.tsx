@@ -29,7 +29,7 @@ const SpotifyTrack = ({ track }: Props) => {
     <div className={styles.root}>
       <div className={styles.albumImage}>
         <img src={image.url} alt={album.name}/>
-        <button onClick={controls.toggle}>{previewButtonText}</button>
+        <button onClick={controls.toggle} disabled={state === PlaybackState.LOADING}>{previewButtonText}</button>
       </div>
       <div>
         <a href={track.external_urls.spotify}>{track.name}</a>
